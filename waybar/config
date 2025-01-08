@@ -1,0 +1,175 @@
+{
+  // "position": "bottom", // Waybar position (top|bottom|left|right)
+  "layer": "top", // Waybar at top layer
+  "height": 15, // Waybar height (to be removed for auto height)
+
+  // "width": 1280, // Waybar width
+  "spacing": 2, // Gaps between modules (4px)
+  "margin": "2 2 0 2", // Waybar margin (top right bottom left)
+  "fixed-center": true, // Center modules
+
+  "font": "FiraCode Nerd Font Mono, FontAwesome, monospace",
+
+  // Choose the order of the modules
+  "modules-left": ["hyprland/workspaces"],
+  // "modules-left": ["user", "wlr/workspaces"],
+  "modules-center": ["custom/media"],
+  "modules-right": [
+    "custom/notification", 
+    // "custom/cava",
+    "backlight",
+    "pulseaudio",
+    "network",
+    /* "bluetooth", */
+    // "battery",
+    "clock",
+    // "tray",
+    "custom/power-menu"
+  ],
+
+  //  Modules configuration
+  
+  "user": {
+        "format": "{user}",
+        "interval": 60,
+        "height": 30,
+        "width": 30,
+        "icon": true,
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e-1",
+    "on-scroll-down": "hyprctl dispatch workspace e+1",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "十",
+      "urgent": "",
+    }
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {used:0.1f}G / {total:0.1f}G",
+    "on-click": "kitty -e btop",
+    "tooltip": false
+  },
+  "backlight": {
+        "device": "DP-1",
+        "format": "<span color=\"#fab387\">{icon}</span> {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "on-click": "",
+        "on-scroll-up": "brightnessctl set 10+",
+        "on-scroll-down": "brightnessctl set 10-",
+    },
+  "pulseaudio": {
+    // "scroll-step": 1, // %, can be a float
+    "format": "<span color=\"#74c7ec\">{icon}</span> {volume}%",
+    "format-bluetooth": "{volume}%  {format_source}",
+    "format-bluetooth-muted": "婢 ",
+    "format-muted": "婢",
+    // "format-source": "{volume}% ",
+    // "format-source-muted": "",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", " ", " "]
+    },
+    "on-click": "pavucontrol"
+  },
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "format-wifi": "<span color=\"#eba0ac\">直 </span>{signalStrength}%",
+    "format-ethernet": " {cidr}",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "睊",
+    "on-click": "kitty -e nmtui"
+  },
+  "bluetooth": {
+	// "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+	"format": "<span color=\"#89b4fa\"> </span>{status}",
+	"format-disabled": "", // an empty format will hide the module
+	"format-connected": " {num_connections} connected",
+	"tooltip-format": "{controller_alias}\t{controller_address}",
+	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+},
+  "battery": {
+      "bat": "BAT0",
+      "adapter": "ADP0",
+      "interval": 60,
+      "states": {
+          "warning": 30,
+          "critical": 15
+      },
+      "max-length": 20,
+      "format": "<span color=\"#94e2d5\">{icon}</span> {capacity}%",
+      "format-warning": "{icon} {capacity}%",
+      "format-critical": "{icon} {capacity}%",
+      "format-charging": "<span font-family='Font Awesome 6 Free'></span> {capacity}%",
+      "format-plugged": "  {capacity}%",
+      "format-alt": "{icon} {time}",
+      "format-full": "  {capacity}%",
+      "format-icons": [" ", " ", " ", " ", " "],
+    },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": " {:%a %b %d}",
+    "format": "<span color=\"#74c7ec\"> </span>{:%I:%M %p}",
+    "today-format": "<span color='#ff6699'><b><u>{}</u></b></span>",
+    "format-calendar": "<span color='#ecc6d9'><b>{}</b></span>",
+    "format-calendar-weeks": "<span color='#99ffdd'><b>W{:%U}</b></span>",
+    "format-calendar-weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+    "on-scroll": {
+      "calendar": 1
+    }
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 5
+  },
+  "custom/spotify": {
+    "exec": "python ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+    "format": " {}",
+    "return-type": "json",
+    "on-click": "playerctl --player=spotify play-pause",
+    "on-scroll-down": "playerctl --player=spotify next",
+    "on-scroll-up": "playerctl --player=spotify previous",
+    "tooltip": false
+  },
+  "custom/media": {
+        "exec": "python ~/.config/waybar/scripts/mediaplayer.py",
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "五"
+        },
+        "escape": true,
+    },
+  "custom/power-menu": {
+    "format": "⏻",
+    "on-click": "~/.config/waybar/scripts/power-menu/powermenu.sh"
+  },
+  "custom/notification": {
+    "exec": "~/.config/waybar/scripts/notification.sh",
+    "on-click": "dunstctl set-paused toggle",
+    "on-click-right": "notify-send -t 1 'swww' '1' & ~/.config/hypr/scripts/setwall",
+    "return-type": "json",
+    "max-length": 50,
+    "format": "{}"
+  }
+}

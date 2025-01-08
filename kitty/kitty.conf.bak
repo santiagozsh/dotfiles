@@ -1,0 +1,14 @@
+# Set the font family
+font_family    JetBrainsMono Nerd Font
+
+# Set the font size
+font_size       14.0
+
+# Incluir el tema Tokyo Night
+# include themes/tokyo_night.conf
+
+
+# BEGIN_KITTY_THEME
+# Hachiko
+include current-theme.conf
+# END_KITTY_THEME
